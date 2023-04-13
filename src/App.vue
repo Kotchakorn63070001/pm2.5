@@ -56,7 +56,7 @@
             <td v-if="data.AQILast.PM25.color_id == 3">
               <button class="button is-rounded is-large" >
                 <span class="icon ">
-                  <font-awesome-icon icon="fa-solid fa-face-meh" style="color: #ffff00;" />
+                  <font-awesome-icon icon="fa-solid fa-face-meh" style="color: #ffdb58;" />
                 </span>
               </button>
             </td>
@@ -120,7 +120,7 @@
             <td v-if="data.AQILast.PM25.color_id == 3">
               <button class="button is-rounded is-large" >
                 <span class="icon ">
-                  <font-awesome-icon icon="fa-solid fa-face-meh" style="color: #ffff00;" />
+                  <font-awesome-icon icon="fa-solid fa-face-meh" style="color: #ffdb58;" />
                 </span>
               </button>
             </td>
@@ -209,7 +209,13 @@ export default {
       if (this.search !== ''){
         this.checkSearch = true
         this.result = this.info.filter((val) =>
-          val.nameTH.toLowerCase().includes(this.search.toLowerCase())
+          val.nameTH.toLowerCase().includes(this.search.toLowerCase()) 
+          ||
+          val.nameEN.toLowerCase().includes(this.search.toLowerCase())
+          ||
+          val.areaTH.toLowerCase().includes(this.search.toLowerCase())
+          ||
+          val.areaEN.toLowerCase().includes(this.search.toLowerCase())
         );
         if (this.result.length == 0){
           alert('ไม่พบพื้นที่')
