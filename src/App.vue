@@ -145,6 +145,7 @@
       </table>
     </div>
   </div>
+  
 </template>
 
 <script>
@@ -162,6 +163,7 @@ export default {
       result: null,
       checkSearch: false,
       size: 0,
+      
       // selectInfo: {
       //   stationID: '',
       //   nameTH: '',
