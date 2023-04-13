@@ -205,6 +205,7 @@ export default {
         })
     },
     filterLocation(){
+      /// jen test
       if (this.search !== ''){
         this.checkSearch = true
         this.result = this.info.filter((val) =>
