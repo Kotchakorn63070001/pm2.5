@@ -46,31 +46,38 @@
                 </span>
               </button>
             </td>
-            <td v-if="data.AQILast.PM25.color_id == 2">
+            <td v-else-if="data.AQILast.PM25.color_id == 2">
               <button class="button is-rounded is-large" >
                 <span class="icon ">
                   <font-awesome-icon icon="fa-solid fa-face-smile" style="color: #92d050;" />
                 </span>
               </button>
             </td>
-            <td v-if="data.AQILast.PM25.color_id == 3">
+            <td v-else-if="data.AQILast.PM25.color_id == 3">
               <button class="button is-rounded is-large" >
                 <span class="icon ">
                   <font-awesome-icon icon="fa-solid fa-face-meh" style="color: #ffdb58;" />
                 </span>
               </button>
             </td>
-            <td v-if="data.AQILast.PM25.color_id == 4">
+            <td v-else-if="data.AQILast.PM25.color_id == 4">
               <button class="button is-rounded is-large" >
                 <span class="icon ">
                   <font-awesome-icon icon="fa-solid fa-face-frown" style="color: #ffa200;" />
                 </span>
               </button>
             </td>
-            <td v-if="data.AQILast.PM25.color_id == 5">
+            <td v-else-if="data.AQILast.PM25.color_id == 5">
               <button class="button is-rounded is-large" >
                 <span class="icon ">
                   <font-awesome-icon icon="fa-solid fa-face-angry" style="color: #f04646;" />
+                </span>
+              </button>
+            </td>
+            <td v-else>
+              <button class="button is-rounded is-large" >
+                <span class="icon ">
+                  <font-awesome-icon icon="fa-solid fa-circle-exclamation" />
                 </span>
               </button>
             </td>
@@ -110,31 +117,38 @@
                 </span>
               </button>
             </td>
-            <td v-if="data.AQILast.PM25.color_id == 2">
+            <td v-else-if="data.AQILast.PM25.color_id == 2">
               <button class="button is-rounded is-large" >
                 <span class="icon ">
                   <font-awesome-icon icon="fa-solid fa-face-smile" style="color: #92d050;" />
                 </span>
               </button>
             </td>
-            <td v-if="data.AQILast.PM25.color_id == 3">
+            <td v-else-if="data.AQILast.PM25.color_id == 3">
               <button class="button is-rounded is-large" >
                 <span class="icon ">
                   <font-awesome-icon icon="fa-solid fa-face-meh" style="color: #ffdb58;" />
                 </span>
               </button>
             </td>
-            <td v-if="data.AQILast.PM25.color_id == 4">
+            <td v-else-if="data.AQILast.PM25.color_id == 4">
               <button class="button is-rounded is-large" >
                 <span class="icon ">
                   <font-awesome-icon icon="fa-solid fa-face-frown" style="color: #ffa200;" />
                 </span>
               </button>
             </td>
-            <td v-if="data.AQILast.PM25.color_id == 5">
+            <td v-else-if="data.AQILast.PM25.color_id == 5">
               <button class="button is-rounded is-large" >
                 <span class="icon ">
                   <font-awesome-icon icon="fa-solid fa-face-angry" style="color: #f04646;" />
+                </span>
+              </button>
+            </td>
+            <td v-else>
+              <button class="button is-rounded is-large" >
+                <span class="icon ">
+                  <font-awesome-icon icon="fa-sharp fa-solid fa-circle-exclamation" />
                 </span>
               </button>
             </td>
