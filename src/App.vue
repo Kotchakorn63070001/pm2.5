@@ -102,7 +102,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr  v-for="data in info" :key="data.stationID">
+          <tr v-for="data in info" :key="data.stationID" @click="openModal(data)">
+            
             <!-- <td>{{  data.stationID }}</td> -->
             <td>{{  data.nameTH }}</td>
             <td>{{  data.nameEN }}</td>
@@ -157,13 +158,44 @@
           </tr>
         </tbody>
       </table>
+      
     </div>
+    <!-- Modal สำหรับกรอกอีเมล -->
+<div class="modal" :class="{ 'is-active': isModalActive }">
+  <div class="modal-background" @click="closeModal"></div>
+  <div class="modal-card">
+    
+    <header class="modal-card-head">
+      <p class="modal-card-title">กรอกอีเมลเพื่อรับข้อมูล PM 2.5</p>
+      <button class="delete" aria-label="close" @click="closeModal"></button>
+    </header>
+    <section class="modal-card-body">
+      <div class="field">
+        <p class="control has-icons-left">
+          <input class="input" type="email" placeholder="อีเมล" v-model="email" style="font-family: 'Kanit', sans-serif;">
+          <span class="icon is-small is-left">
+            <font-awesome-icon icon="fa-solid fa-envelope" />
+          </span>
+        </p>
+      </div>
+      <div class="form-group">
+    <label for="scheduledTime">เวลาที่ต้องการส่ง:</label>
+    <input type="time" class="form-control" id="scheduledTime" v-model="scheduledTime">
+  </div> 
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-link is-outlined" @click="sendEmail">ส่งข้อมูล PM 2.5 ไปที่อีเมล</button>
+      <button class="button is-link is-light" @click="closeModal">ยกเลิก</button>
+    </footer>
+  </div>
+</div>
   </div>
   
 </template>
 
 <script>
 import axios from 'axios'
+import emailjs from 'emailjs-com';
 
 export default {
   name: 'App',
@@ -177,7 +209,9 @@ export default {
       result: null,
       checkSearch: false,
       size: 0,
-      
+      isModalActive: false,
+      //scheduledTime: '09:00',
+
       // selectInfo: {
       //   stationID: '',
       //   nameTH: '',
@@ -194,6 +228,7 @@ export default {
   },
   created() {
     this.fetchData()
+    //this.scheduleEmail();
     setInterval(() => {
       this.fetchData()
     }, 60000)
@@ -238,8 +273,78 @@ export default {
       else {
         this.checkSearch = false
       }
-    }
-}}
+    },
+    openModal(data) {
+      this.selectedData = data;
+      this.isModalActive = true;
+    },
+    closeModal() {
+      this.isModalActive = false;
+    },
+    async sendEmail() {
+      try {
+        const templateParams = {
+          to_email: this.email,
+          pm25_value: this.selectedData.AQILast.PM25.value,
+          location_name: this.selectedData.nameTH,
+        };
+
+        const result = await emailjs.sendForm('service_0nazvow', 'template_2yaj7wf', templateParams, 'R1-S3aMadPkVaUqP3',);
+
+        if (result.status === 200) {
+          alert('อีเมลถูกส่งเรียบร้อยแล้ว');
+        } else {
+          alert('เกิดข้อผิดพลาดในการส่งอีเมล');
+        }
+      } catch (error) {
+        console.error('Failed to send email:', error);
+        alert('เกิดข้อผิดพลาดในการส่งอีเมล');
+      }
+
+      this.closeModal();
+  },
+  //แบบกำหนดเวลาไว้แล้ว
+  //scheduleEmail() {     
+  //  const currentTime = new Date();
+  //  const scheduledTime = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 9, 0, 0);
+  //
+  //  if (currentTime > scheduledTime) {
+  //    scheduledTime.setDate(scheduledTime.getDate() + 1); // ถ้าหากข้ามเวลาที่ตั้งไว้แล้ว ให้ส่งในวันถัดไป
+  //  }
+  //
+  //  const timeDifference = scheduledTime - currentTime;
+  //
+  //  setTimeout(() => {
+  //    this.sendEmail();
+  //    setInterval(() => {
+  //      this.sendEmail();
+  //    }, 24 * 60 * 60 * 1000); // ส่งอีเมล์ทุกๆ 24 ชั่วโมง
+  //  }, timeDifference);
+  //},
+
+//แบบinputเวลาจากuser
+//  scheduleEmail() {
+//  const currentTime = new Date();
+//  const [scheduledHour, scheduledMinute] = this.scheduledTime.split(':');
+//  const scheduledTime = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), scheduledHour, scheduledMinute, 0);
+//
+//  if (currentTime > scheduledTime) {
+//    scheduledTime.setDate(scheduledTime.getDate() + 1); // ถ้าหากข้ามเวลาที่ตั้งไว้แล้ว ให้ส่งในวันถัดไป
+//  }
+//
+//  const timeDifference = scheduledTime - currentTime;
+//
+//  setTimeout(() => {
+//    this.sendEmail();
+//    setInterval(() => {
+//      this.sendEmail();
+//    }, 24 * 60 * 60 * 1000); // ส่งอีเมล์ทุกๆ 24 ชั่วโมง
+//  }, timeDifference);
+//},
+
+
+}
+}
 </script>
 <style>
   @import 'bulma/css/bulma.css';
