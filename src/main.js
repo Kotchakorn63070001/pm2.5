@@ -19,6 +19,9 @@ library.add(faFaceFrown)
 library.add(faFaceAngry)
 library.add(faCircleExclamation)
 
+
+
+
 createApp(App)
 .component('font-awesome-icon', FontAwesomeIcon)
 .mount('#app')
