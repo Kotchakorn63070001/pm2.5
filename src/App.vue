@@ -1,7 +1,7 @@
 <template>
   <div id="app" >
-    <div class="container is-max-widescreen mt-5 is-family-monospace" >
-      <h1 class="title has-text-centered" style="font-family: 'Kanit', sans-serif;">รายงานสภาพอากาศฝุ่น PM 2.5</h1>
+    <div class="container is-max-widescreen mt-5" >
+      <h1 class="title has-text-centered" style="font-family: 'Kanit', sans-serif">รายงานสภาพอากาศฝุ่น PM 2.5</h1>
       <div class="field is-grouped is-grouped-centered">
         <p class="control has-icons-left">
           <input class="input is-rounded" type="text" placeholder="ค้นหาพื้นที่" v-model="search" style="font-family: 'Kanit', sans-serif;">
@@ -15,8 +15,10 @@
           </a>
         </p>
       </div>
-      <table class="table" style="font-family: 'Kanit', sans-serif;" v-if="checkSearch == true">
-        <thead>
+      <p class="is-size-7 has-text-right" style="font-family: 'Kanit', sans-serif;">ข้อมูลจากกรมควบคุมมลพิษ</p>
+      <!-- Table Show Search -->
+      <table class="table is-hoverable is-fullwidth" style="font-family: 'Kanit', sans-serif;" v-if="checkSearch == true">
+        <thead class="has-background-link-light">
           <tr>
             <!-- <th>stationID</th> -->
             <th>ชื่อสถานที่</th>
@@ -40,44 +42,44 @@
             <td>{{  data.AQILast.date }}</td>
             <td>{{  data.AQILast.time }}</td>
             <td v-if="data.AQILast.PM25.color_id == 1">
-              <button class="button is-rounded is-large" >
+              <button class="button is-rounded is-large" @click="modalDetail = true">
                 <span class="icon">
-                  <font-awesome-icon icon="fa-solid fa-face-laugh-beam" style="color: #3bccff;" />
+                  <font-awesome-icon icon="fa-solid fa-face-laugh-beam" size="lg" style="color: #3bccff;" />
                 </span>
               </button>
             </td>
             <td v-else-if="data.AQILast.PM25.color_id == 2">
-              <button class="button is-rounded is-large" >
+              <button class="button is-rounded is-large" @click="modalDetail = true">
                 <span class="icon ">
-                  <font-awesome-icon icon="fa-solid fa-face-smile" style="color: #92d050;" />
+                  <font-awesome-icon icon="fa-solid fa-face-smile" size="lg" style="color: #92d050;" />
                 </span>
               </button>
             </td>
             <td v-else-if="data.AQILast.PM25.color_id == 3">
-              <button class="button is-rounded is-large" >
+              <button class="button is-rounded is-large" @click="modalDetail = true">
                 <span class="icon ">
-                  <font-awesome-icon icon="fa-solid fa-face-meh" style="color: #ffdb58;" />
+                  <font-awesome-icon icon="fa-solid fa-face-meh" size="lg" style="color: #ffdb58;" />
                 </span>
               </button>
             </td>
             <td v-else-if="data.AQILast.PM25.color_id == 4">
-              <button class="button is-rounded is-large" >
+              <button class="button is-rounded is-large" @click="modalDetail = true">
                 <span class="icon ">
-                  <font-awesome-icon icon="fa-solid fa-face-frown" style="color: #ffa200;" />
+                  <font-awesome-icon icon="fa-solid fa-face-frown" size="lg" style="color: #ffa200;" />
                 </span>
               </button>
             </td>
             <td v-else-if="data.AQILast.PM25.color_id == 5">
-              <button class="button is-rounded is-large" >
+              <button class="button is-rounded is-large" @click="modalDetail = true">
                 <span class="icon ">
-                  <font-awesome-icon icon="fa-solid fa-face-angry" style="color: #f04646;" />
+                  <font-awesome-icon icon="fa-solid fa-face-angry" size="lg" style="color: #f04646;" />
                 </span>
               </button>
             </td>
             <td v-else>
               <button class="button is-rounded is-large" >
                 <span class="icon ">
-                  <font-awesome-icon icon="fa-solid fa-circle-exclamation" />
+                  <font-awesome-icon icon="fa-solid fa-circle-exclamation" size="lg" />
                 </span>
               </button>
             </td>
@@ -86,8 +88,10 @@
           </tr>
         </tbody>
       </table>
-      <table class="table" style="font-family: 'Kanit', sans-serif;" v-else>
-        <thead>
+
+      <!-- Table Show All Area -->
+      <table class="table is-hoverable is-fullwidth" style="font-family: 'Kanit', sans-serif;" v-else>
+        <thead class="has-background-link-light">
           <tr>
             <!-- <th>stationID</th> -->
             <th>ชื่อสถานที่</th>
@@ -111,44 +115,44 @@
             <td>{{  data.AQILast.date }}</td>
             <td>{{  data.AQILast.time }}</td>
             <td v-if="data.AQILast.PM25.color_id == 1">
-              <button class="button is-rounded is-large" >
+              <button class="button is-rounded is-large" @click="showDetail(data.AQILast.PM25.color_id)">
                 <span class="icon">
-                  <font-awesome-icon icon="fa-solid fa-face-laugh-beam" style="color: #3bccff;" />
+                  <font-awesome-icon icon="fa-solid fa-face-laugh-beam" size="lg" style="color: #3bccff;" />
                 </span>
               </button>
             </td>
             <td v-else-if="data.AQILast.PM25.color_id == 2">
-              <button class="button is-rounded is-large" >
+              <button class="button is-rounded is-large" @click="showDetail(data.AQILast.PM25.color_id)">
                 <span class="icon ">
-                  <font-awesome-icon icon="fa-solid fa-face-smile" style="color: #92d050;" />
+                  <font-awesome-icon icon="fa-solid fa-face-smile" size="lg" style="color: #92d050;" />
                 </span>
               </button>
             </td>
             <td v-else-if="data.AQILast.PM25.color_id == 3">
-              <button class="button is-rounded is-large" >
+              <button class="button is-rounded is-large" @click="showDetail(data.AQILast.PM25.color_id)">
                 <span class="icon ">
-                  <font-awesome-icon icon="fa-solid fa-face-meh" style="color: #ffdb58;" />
+                  <font-awesome-icon icon="fa-solid fa-face-meh" size="lg" style="color: #ffdb58;" />
                 </span>
               </button>
             </td>
             <td v-else-if="data.AQILast.PM25.color_id == 4">
-              <button class="button is-rounded is-large" >
+              <button class="button is-rounded is-large" @click="showDetail(data.AQILast.PM25.color_id)">
                 <span class="icon ">
-                  <font-awesome-icon icon="fa-solid fa-face-frown" style="color: #ffa200;" />
+                  <font-awesome-icon icon="fa-solid fa-face-frown" size="lg" style="color: #ffa200;" />
                 </span>
               </button>
             </td>
             <td v-else-if="data.AQILast.PM25.color_id == 5">
-              <button class="button is-rounded is-large" >
+              <button class="button is-rounded is-large" @click="showDetail(data.AQILast.PM25.color_id)">
                 <span class="icon ">
-                  <font-awesome-icon icon="fa-solid fa-face-angry" style="color: #f04646;" />
+                  <font-awesome-icon icon="fa-solid fa-face-angry" size="lg" style="color: #f04646;" />
                 </span>
               </button>
             </td>
             <td v-else>
-              <button class="button is-rounded is-large" >
+              <button class="button is-rounded is-large" @click="showDetail(data.AQILast.PM25.color_id)">
                 <span class="icon ">
-                  <font-awesome-icon icon="fa-sharp fa-solid fa-circle-exclamation" />
+                  <font-awesome-icon icon="fa-solid fa-circle-exclamation" size="lg" />
                 </span>
               </button>
             </td>
@@ -157,6 +161,166 @@
           </tr>
         </tbody>
       </table>
+
+      <!-- Modal Show Detail -->
+      <div class="modal" v-bind:class="{'is-active' : modalDetail}">
+        <div class="modal-background" @click="modalDetail = !modalDetail"></div>
+        <div class="modal-content">
+          <div class="card" v-if="colorIdDetail == 1" style="font-family: 'Kanit', sans-serif;">
+            <div class="card-content">
+              <div class="content">
+                <!-- ฟ้า -->
+                <h3>คุณภาพอากาศดีมาก</h3>
+                <div class="columns has-text-centered">
+                  <div class="column is-2">
+                    <span class="icon is-large">
+                      <span class="fa-stack fa-lg">
+                        <font-awesome-icon icon="fa-solid fa-face-laugh-beam" size="2xl" style="color: #3bccff;" />
+                      </span>
+                    </span>
+                  </div>
+                  <div class="column is-4">
+                    0 – 25<br>ไมโครกรัมต่อลูกบาศก์เมตร
+                  </div>
+                  <div class="column is-6">
+                    สามารถทำกิจกรรมนอกบ้านได้ตามปกติ
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card" v-else-if="colorIdDetail == 2" style="font-family: 'Kanit', sans-serif;">
+            <div class="card-content">
+              <div class="content">
+                <!-- เขียว -->
+                <h3>คุณภาพอากาศดี</h3>
+                <div class="columns has-text-centered">
+                  <div class="column is-2">
+                    <span class="icon is-large">
+                      <span class="fa-stack fa-lg">
+                        <font-awesome-icon icon="fa-solid fa-face-smile" size="2xl" style="color: #92d050;" />
+                      </span>
+                    </span>
+                  </div>
+                  <div class="column is-4">
+                    26 – 37<br>ไมโครกรัมต่อลูกบาศก์เมตร
+                  </div>
+                  <div class="column is-6">
+                    สามารถทำกิจกรรมนอกบ้านได้ตามปกติ สำหรับกลุ่มเสี่ยงควรหลีกเลี่ยงการทำกิจกรรมนอกบ้าน
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card" v-else-if="colorIdDetail == 3" style="font-family: 'Kanit', sans-serif;">
+            <div class="card-content">
+              <div class="content">
+                <!-- เหลือง -->
+                <h3>ปานกลาง</h3>
+                <div class="columns has-text-centered">
+                  <div class="column is-2">
+                    <span class="icon is-large">
+                      <span class="fa-stack fa-lg">
+                        <font-awesome-icon icon="fa-solid fa-face-meh" size="2xl" style="color: #ffdb58;" />
+                      </span>
+                    </span>
+                  </div>
+                  <div class="column is-4">
+                    38 – 50<br>ไมโครกรัมต่อลูกบาศก์เมตร
+                  </div>
+                  <div class="column is-6">
+                    หลีกเลี่ยงการทำกิจกรรมนอกบ้าน กลุ่มเสี่ยงควรหลีกเลี่ยงการทำกิจกรรมนอกบ้าน
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <footer class="card-footer">
+              <div class="card-footer-item">
+                <dl>
+                  <dt>หากหลีกเลี่ยงไม่ได้จำเป็นต้องสวมหน้ากากป้องกันฝุ่น โดยมีวิธีการเลือก ดังนี้</dt>
+                    <ol>
+                      <li>หน้ากาก N95 ต้องเลือกที่มีขนาดเหมาะ แนบกระชับกับใบหน้า ครอบจมูกและใต้คางได้อย่างมิดชิด</li>
+                      <li>หน้ากากอนามัย ต้องผลิตจากวัสดุสังเคราะห์ อย่างน้อย 3 ชั้น โดยมีแผ่นกรองอยู่ชั้นกลาง</li>
+                      <li>หน้ากากผ้า ต้องตัดเย็บจากผ้าที่ซ้อนกันอย่างน้อย 2 ชั้น หรือมีความหนาไม่น้อยกว่า 0.5 มิลลิเมตร และมีขนาดเหมาะกับใบหน้า</li>
+                    </ol>
+                </dl>
+              </div>
+            </footer> -->
+          </div>
+          <div class="card" v-else-if="colorIdDetail == 4" style="font-family: 'Kanit', sans-serif;">
+            <div class="card-content">
+              <div class="content">
+                <!-- ส้ม -->
+                <h3>เริ่มมีผลกระทบต่อสุขภาพ</h3>
+                <div class="columns has-text-centered">
+                  <div class="column is-2">
+                    <span class="icon is-large">
+                      <span class="fa-stack fa-lg">
+                        <font-awesome-icon icon="fa-solid fa-face-frown" size="2xl" style="color: #ffa200;" />
+                      </span>
+                    </span>
+                  </div>
+                  <div class="column is-4">
+                    51 – 90<br>ไมโครกรัมต่อลูกบาศก์เมตร
+                  </div>
+                  <div class="column is-6">
+                    ลดหรือจำกัดการทำกิจกรรมนอกบ้าน กลุ่มเสี่ยงควรลดเวลาการทำกิจกรรมนอกบ้าน
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card" v-else-if="colorIdDetail == 5" style="font-family: 'Kanit', sans-serif;">
+            <div class="card-content">
+              <div class="content">
+                <!-- แดง -->
+                <h3>มีผลกระทบต่อสุขภาพ</h3>
+                <div class="columns has-text-centered">
+                  <div class="column is-2">
+                    <span class="icon is-large">
+                      <span class="fa-stack fa-lg">
+                        <font-awesome-icon icon="fa-solid fa-face-angry" size="2xl" style="color: #f04646;" />
+                      </span>
+                    </span>
+                  </div>
+                  <div class="column is-4">
+                    91 ขึ้นไป<br>ไมโครกรัมต่อลูกบาศก์เมตร
+                  </div>
+                  <div class="column is-6">
+                    ลดหรืองดการทำกิจกรรมนอกบ้าน เปลี่ยนมาออกกำลังกายในบ้าน
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card" v-else style="font-family: 'Kanit', sans-serif;">
+            <div class="card-content">
+              <div class="content">
+                <!-- ไม่พบข้อมูล -->
+                <h3>ไม่พบข้อมูล</h3>
+                <div class="columns has-text-centered">
+                  <div class="column is-2">
+                    <span class="icon is-large">
+                      <span class="fa-stack fa-lg">
+                        <font-awesome-icon icon="fa-solid fa-circle-exclamation" size="2xl" style="color: #f04646;" />
+                      </span>
+                    </span>
+                  </div>
+                  <div class="column is-4">
+                    -
+                  </div>
+                  <div class="column is-6">
+                    -
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close" @click="modalDetail = !modalDetail"></button>
+      </div>
+
+
     </div>
   </div>
   
@@ -177,19 +341,8 @@ export default {
       result: null,
       checkSearch: false,
       size: 0,
-      
-      // selectInfo: {
-      //   stationID: '',
-      //   nameTH: '',
-      //   nameEN: '',
-      //   areaTH: '',
-      //   areaEN: '',
-      //   date: '',
-      //   time: '',
-      //   color_id: '',
-      //   aqi: '',
-      //   value: ''
-      // }
+      modalDetail: false,
+      colorIdDetail: '',
     }
   },
   created() {
@@ -219,7 +372,6 @@ export default {
         })
     },
     filterLocation(){
-      /// jen test
       if (this.search !== ''){
         this.checkSearch = true
         this.result = this.info.filter((val) =>
@@ -238,6 +390,10 @@ export default {
       else {
         this.checkSearch = false
       }
+    },
+    showDetail(colorId){
+      this.modalDetail = true
+      this.colorIdDetail = colorId
     }
 }}
 </script>
