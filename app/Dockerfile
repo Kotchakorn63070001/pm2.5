@@ -11,6 +11,9 @@ RUN npm install
 ADD . .
 RUN npm run serve
 
-FROM nginx:1.13.6
-WORKDIR /usr/share/nginx/html
-COPY --from=step01 /app/src/dist .
+# FROM nginx:1.13.6
+# WORKDIR /usr/share/nginx/html
+# COPY --from=step01 /app/src/dist .
+FROM nginx:latest
+# COPY index.html /usr/share/nginx/html/
+COPY . /usr/share/nginx/html/
