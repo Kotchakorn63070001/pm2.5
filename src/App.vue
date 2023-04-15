@@ -1,18 +1,17 @@
 <template>
-  <div id="app" >
-    <div class="container is-max-widescreen mt-5" >
+  <div id="app">
+    <div class="container is-max-widescreen mt-5">
       <h1 class="title has-text-centered" style="font-family: 'Kanit', sans-serif">รายงานสภาพอากาศฝุ่น PM 2.5</h1>
       <div class="field is-grouped is-grouped-centered">
         <p class="control has-icons-left">
-          <input class="input is-rounded" type="text" placeholder="ค้นหาพื้นที่" v-model="search" style="font-family: 'Kanit', sans-serif;">
+          <input class="input is-rounded" type="text" placeholder="ค้นหาพื้นที่" v-model="search"
+            style="font-family: 'Kanit', sans-serif;">
           <span class="icon is-small is-left">
             <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
           </span>
         </p>
         <p class="control" style="font-family: 'Kanit', sans-serif">
-          <a class="button is-link is-outlined is-rounded" @click="filterLocation">
-            ค้นหา
-          </a>
+          <a class="button is-link is-outlined is-rounded" @click="filterLocation"> ค้นหา </a>
         </p>
       </div>
       <p class="is-size-7 has-text-right" style="font-family: 'Kanit', sans-serif;">ข้อมูลจากกรมควบคุมมลพิษ</p>
@@ -34,14 +33,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr  v-for="data in result" :key="data.stationID">
-            <!-- <td>{{  data.stationID }}</td> -->
-            <td>{{  data.nameTH }}</td>
-            <td>{{  data.nameEN }}</td>
-            <td>{{  data.areaTH }}</td>
-            <td>{{  data.areaEN }}</td>
-            <td>{{  data.AQILast.date }}</td>
-            <td>{{  data.AQILast.time }}</td>
+          <tr v-for="data in result" :key="data.stationID">
+            <td>{{ data.nameTH }}</td>
+            <td>{{ data.nameEN }}</td>
+            <td>{{ data.areaTH }}</td>
+            <td>{{ data.areaEN }}</td>
+            <td>{{ data.AQILast.date }}</td>
+            <td>{{ data.AQILast.time }}</td>
             <td v-if="data.AQILast.PM25.color_id == 1">
               <button class="button is-rounded is-large" @click="showDetail(data.AQILast.PM25.color_id)">
                 <span class="icon">
@@ -84,20 +82,19 @@
                 </span>
               </button>
             </td>
-            <td>{{  data.AQILast.PM25.aqi }}</td>
-            <td>{{  data.AQILast.PM25.value }}</td>
+            <td>{{ data.AQILast.PM25.aqi }}</td>
+            <td>{{ data.AQILast.PM25.value }}</td>
             <td>
-              <button class="button is-info is-light" @click="openModal(data)" style="font-family: 'Kanit', sans-serif">รับข้อมูล</button>
+              <button class="button is-info is-light" @click="openModal(data)"
+                style="font-family: 'Kanit', sans-serif">รับข้อมูล</button>
             </td>
           </tr>
         </tbody>
       </table>
-
       <!-- Table Show All Area -->
       <table class="table is-hoverable" style="font-family: 'Kanit', sans-serif;" v-else>
         <thead class="has-background-link-light">
           <tr>
-            <!-- <th>stationID</th> -->
             <th>ชื่อสถานที่</th>
             <th></th>
             <th>พื้นที่</th>
@@ -111,14 +108,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr  v-for="data in info" :key="data.stationID">
-            <!-- <td>{{  data.stationID }}</td> -->
-            <td>{{  data.nameTH }}</td>
-            <td>{{  data.nameEN }}</td>
-            <td>{{  data.areaTH }}</td>
-            <td>{{  data.areaEN }}</td>
-            <td>{{  data.AQILast.date }}</td>
-            <td>{{  data.AQILast.time }}</td>
+          <tr v-for="data in info" :key="data.stationID">
+            <td>{{ data.nameTH }}</td>
+            <td>{{ data.nameEN }}</td>
+            <td>{{ data.areaTH }}</td>
+            <td>{{ data.areaEN }}</td>
+            <td>{{ data.AQILast.date }}</td>
+            <td>{{ data.AQILast.time }}</td>
             <td v-if="data.AQILast.PM25.color_id == 1">
               <button class="button is-rounded is-large" @click="showDetail(data.AQILast.PM25.color_id)">
                 <span class="icon">
@@ -161,16 +157,17 @@
                 </span>
               </button>
             </td>
-            <td>{{  data.AQILast.PM25.aqi }}</td>
-            <td>{{  data.AQILast.PM25.value }}</td>
+            <td>{{ data.AQILast.PM25.aqi }}</td>
+            <td>{{ data.AQILast.PM25.value }}</td>
             <td>
-              <button class="button is-info is-light" @click="openModal(data)" style="font-family: 'Kanit', sans-serif">รับข้อมูล</button>
+              <button class="button is-info is-light" @click="openModal(data)"
+                style="font-family: 'Kanit', sans-serif">รับข้อมูล</button>
             </td>
           </tr>
         </tbody>
       </table>
       <!-- Modal Show Detail -->
-      <div class="modal" v-bind:class="{'is-active' : modalDetail}">
+      <div class="modal" v-bind:class="{ 'is-active': modalDetail }">
         <div class="modal-background" @click="modalDetail = !modalDetail"></div>
         <div class="modal-content">
           <div class="card" v-if="colorIdDetail == 1" style="font-family: 'Kanit', sans-serif;">
@@ -314,55 +311,40 @@
         </div>
         <button class="modal-close is-large" aria-label="close" @click="modalDetail = !modalDetail"></button>
       </div>
-    <!-- Modal สำหรับกรอกอีเมล -->
-    <div class="modal" :class="{ 'is-active': isModalActive }">
-      <div class="modal-background" @click="closeModal"></div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">กรอกอีเมลเพื่อรับข้อมูล PM 2.5</p>
-          <button
-            class="delete"
-            aria-label="close"
-            @click="closeModal"
-          ></button>
-        </header>
-        <section class="modal-card-body">
-          <div class="field">
-            <p class="control has-icons-left">
-              <input
-                class="input"
-                type="email"
-                placeholder="อีเมล"
-                v-model="email"
-                style="font-family: 'Kanit', sans-serif"
-              />
-              <span class="icon is-small is-left">
-                <font-awesome-icon icon="fa-solid fa-envelope" />
-              </span>
-            </p>
-          </div>
-          <div class="form-group">
-            <label for="scheduledTime">เวลาที่ต้องการส่ง:</label>
-            <input
-              type="time"
-              class="form-control"
-              id="scheduledTime"
-              v-model="scheduledTime"/>
-          </div>
-        </section>
-        <footer class="modal-card-foot" >
-          <button class="button is-link is-outlined" @click="sendEmailAndSchedule" style="font-family: 'Kanit', sans-serif">
-  ส่งข้อมูล PM 2.5 ไปที่อีเมล
-</button>
-
-
-
-          <button class="button is-link is-light" @click="closeModal" style="font-family: 'Kanit', sans-serif">
-            ยกเลิก
-          </button>
-        </footer>
+      <!-- Modal สำหรับกรอกอีเมล -->
+      <div class="modal" :class="{ 'is-active': isModalActive }">
+        <div class="modal-background" @click="closeModal"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">กรอกอีเมลเพื่อรับข้อมูล PM 2.5</p>
+            <button class="delete" aria-label="close" @click="closeModal"></button>
+          </header>
+          <section class="modal-card-body">
+            <div class="field">
+              <p class="control has-icons-left">
+                <input class="input" type="email" placeholder="อีเมล" v-model="email"
+                  style="font-family: 'Kanit', sans-serif" />
+                <span class="icon is-small is-left">
+                  <font-awesome-icon icon="fa-solid fa-envelope" />
+                </span>
+              </p>
+            </div>
+            <div class="form-group">
+              <label for="scheduledTime">เวลาที่ต้องการส่ง:</label>
+              <input type="time" class="form-control" id="scheduledTime" v-model="scheduledTime" />
+            </div>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-link is-outlined" @click="sendEmailAndSchedule"
+              style="font-family: 'Kanit', sans-serif">
+              ส่งข้อมูล PM 2.5 ไปที่อีเมล
+            </button>
+            <button class="button is-link is-light" @click="closeModal" style="font-family: 'Kanit', sans-serif">
+              ยกเลิก
+            </button>
+          </footer>
+        </div>
       </div>
-    </div>
     </div>
   </div>
 </template>
@@ -386,6 +368,11 @@ export default {
       selectedData: null,
       email: '',
       scheduledTime: '',
+
+      qualityStatus: "",
+      advice: "",
+      iconCode:"",
+      iconColor:""
     }
   },
   created() {
@@ -409,11 +396,11 @@ export default {
           console.error(error)
         })
     },
-    filterLocation(){
-      if (this.search !== ''){
+    filterLocation() {
+      if (this.search !== '') {
         this.checkSearch = true
         this.result = this.info.filter((val) =>
-          val.nameTH.toLowerCase().includes(this.search.toLowerCase()) 
+          val.nameTH.toLowerCase().includes(this.search.toLowerCase())
           ||
           val.nameEN.toLowerCase().includes(this.search.toLowerCase())
           ||
@@ -421,7 +408,7 @@ export default {
           ||
           val.areaEN.toLowerCase().includes(this.search.toLowerCase())
         );
-        if (this.result.length == 0){
+        if (this.result.length == 0) {
           alert('ไม่พบพื้นที่')
         }
       }
@@ -429,10 +416,37 @@ export default {
         this.checkSearch = false
       }
     },
-    showDetail(colorId){
+    showDetail(colorId) {
       this.modalDetail = true
       this.colorIdDetail = colorId
-    },
+
+      if (colorId == 1) {
+      this.qualityStatus = "คุณภาพอากาศดีมาก";
+      this.advice = "สามารถทำกิจกรรมนอกบ้านได้ตามปกติ";
+      this.iconCode = "&#xf599;";
+      this.iconColor = "color: #3bccff;";
+    } else if (colorId == 2) {
+      this.qualityStatus = "คุณภาพอากาศดี";
+      this.advice = "สามารถทำกิจกรรมนอกบ้านได้ตามปกติ สำหรับกลุ่มเสี่ยงควรหลีกเลี่ยงการทำกิจกรรมนอกบ้าน";
+      this.iconCode = "&#xf5b2;";
+      this.iconColor = "color: #92d050;";
+    } else if (colorId == 3) {
+      this.qualityStatus = "คุณภาพอากาศปานกลาง";
+      this.advice = "ควรหลีกเลี่ยงการทำกิจกรรมนอกบ้าน กลุ่มเสี่ยงควรหลีกเลี่ยงการทำกิจกรรมนอกบ้าน";
+      this.iconCode = "&#xf5b1;";
+      this.iconColor = "color: #ffdb58;";
+    } else if (colorId == 4) {
+      this.qualityStatus = "คุณภาพอากาศเริ่มมีผลกระทบต่อสุขภาพ";
+      this.advice = "ควรลดหรือจำกัดการทำกิจกรรมนอกบ้าน กลุ่มเสี่ยงควรลดเวลาการทำกิจกรรมนอกบ้าน";
+      this.iconCode = "&#xf567;";
+      this.iconColor = "color: #ffa200;";
+    }else if (colorId == 5) {
+      this.qualityStatus = "คุณภาพอากาศมีผลกระทบต่อสุขภาพ";
+      this.advice = "ควรลดหรืองดการทำกิจกรรมนอกบ้าน เปลี่ยนมาออกกำลังกายในบ้าน";
+      this.iconCode = "&#xf567;";
+      this.iconColor = "#f04646";
+    }
+  },
     openModal(data) {
       this.selectedData = data;
       console.log(this.selectedData)
@@ -450,10 +464,14 @@ export default {
           locationDetail_name: this.selectedData.areaTH,
           date_value: this.selectedData.AQILast.date,
           time_value: this.selectedData.AQILast.time,
+          qualityStatus: this.qualityStatus,
+          advice: this.advice,
+          iconCode: this.iconCode,
+          iconStyle: this.iconColor
         };
-        const serviceID = "service_v2ciu13";
-        const templateID = "template_tc2zpfc";
-        const userID = "-9ZakZFErDIRoXZEp";
+        const serviceID = "service_vnott1o";
+        const templateID = "template_m1zg4pi";
+        const userID = "oBk37LeZyIX4h_8ne";
         const result = await emailjs.send(
           serviceID,
           templateID,
@@ -467,10 +485,9 @@ export default {
         }
       } catch (error) {
         console.error("Failed to send email:", error);
-
       }
     },
-    scheduleEmail() {
+    async scheduleEmail() {
       const now = new Date();
       const scheduledDate = new Date();
       const [scheduledHour, scheduledMinute] = this.scheduledTime.split(':');
@@ -479,29 +496,39 @@ export default {
       if (scheduledDate <= now) {
         scheduledDate.setDate(scheduledDate.getDate() + 1); // Schedule for the next day if the time has passed today
       }
-
       const timeUntilScheduledTime = scheduledDate - now;
-      setTimeout(this.sendEmail, timeUntilScheduledTime);
+      setTimeout(this.updateSelectedDataAndSendEmail, timeUntilScheduledTime);
+      // setTimeout(this.sendEmail, timeUntilScheduledTime);
     },
     sendEmailAndSchedule() {
-    this.scheduleEmail();
-    alert('อีเมลถูกกำหนดเวลาส่งเรียบร้อย')
-    this.closeModal();
-  },
-}}
+      this.scheduleEmail();
+      alert('อีเมลถูกกำหนดเวลาส่งเรียบร้อย')
+      this.closeModal();
+    },
+    updateSelectedDataAndSendEmail() {
+      const selectedStationId = this.selectedData.id;
+      this.fetchData(); // อัปเดตข้อมูลก่อนส่งอีเมล
+      this.selectedData = this.info.find(station => station.id === selectedStationId);
+      this.sendEmail();
+    }
+
+  }
+}
 </script>
 <style>
-  @import 'bulma/css/bulma.css';
-  @import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+@import 'bulma/css/bulma.css';
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
 
-  html, body {
-    font-family: 'Kanit', sans-serif;
-  }
+html,
+body {
+  font-family: 'Kanit', sans-serif;
+}
 
-  #app {
-    font-family: 'Kanit', sans-serif;
-  }
-  /* สไตล์ของ Modal */
+#app {
+  font-family: 'Kanit', sans-serif;
+}
+
+/* สไตล์ของ Modal */
 /* .modal {
   display: none;
   position: fixed;
@@ -535,5 +562,4 @@ export default {
   text-decoration: none;
   cursor: pointer;
 } */
-
 </style>
