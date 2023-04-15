@@ -506,9 +506,12 @@ export default {
       this.closeModal();
     },
     updateSelectedDataAndSendEmail() {
-      const selectedStationId = this.selectedData.id;
+      const selectedStationId = this.selectedData.stationID;
+      console.log(selectedStationId)
       this.fetchData(); // อัปเดตข้อมูลก่อนส่งอีเมล
-      this.selectedData = this.info.find(station => station.id === selectedStationId);
+      // this.selectedData = this.info.find(station => station.id === selectedStationId);
+      this.selectedData = this.info.find((station) => station.stationID == selectedStationId);
+      console.log(this.selectedData)
       this.sendEmail();
     }
 
