@@ -14,6 +14,7 @@ RUN npm run serve
 # FROM nginx:1.13.6
 # WORKDIR /usr/share/nginx/html
 # COPY --from=step01 /app/src/dist .
-FROM nginx:latest
-# COPY index.html /usr/share/nginx/html/
-COPY /app/src/dist /usr/share/nginx/html/
+FROM nginx:stable-alpine as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+EXPOSE 82
+CMD ["nginx", "-g", "daemon off;"]
