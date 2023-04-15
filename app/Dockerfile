@@ -9,7 +9,7 @@ WORKDIR /app
 ADD package*.json /.
 RUN npm install
 ADD . .
-RUN npm run serve
+RUN npm run build
 
 # FROM nginx:1.13.6
 # WORKDIR /usr/share/nginx/html
