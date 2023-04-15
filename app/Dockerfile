@@ -17,4 +17,4 @@ RUN npm run build
 
 FROM nginx:latest
 # COPY index.html /usr/share/nginx/html/
-COPY App.vue /usr/share/nginx/html/
+COPY . /usr/share/nginx/html/
