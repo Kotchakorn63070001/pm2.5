@@ -1,8 +1,8 @@
 FROM node:8.9.1-alpine as step01
 WORKDIR /app/src
-COPY ./package.json /app/src/package.json
+COPY ./package.json ./
 RUN npm install
-COPY . /app/src
+COPY ./ ./
 RUN npm run serve
 
 FROM nginx:1.13.6
