@@ -1,8 +1,14 @@
-FROM node:8.9.1-alpine as step01
+# FROM node:8.9.1-alpine as step01
+# WORKDIR /app
+# COPY ./package.json ./
+# RUN npm install
+# COPY ./ ./
+# RUN npm run serve
+FROM node:latest
 WORKDIR /app
-COPY ./package.json ./
+ADD package*.json /.
 RUN npm install
-COPY ./ ./
+ADD . .
 RUN npm run serve
 
 FROM nginx:1.13.6
