@@ -16,4 +16,4 @@ RUN npm run serve
 # COPY --from=step01 /app/src/dist .
 FROM nginx:latest
 # COPY index.html /usr/share/nginx/html/
-COPY . /usr/share/nginx/html/
+COPY /app/src/dist /usr/share/nginx/html/
