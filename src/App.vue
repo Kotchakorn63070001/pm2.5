@@ -169,7 +169,6 @@
           </tr>
         </tbody>
       </table>
-
       <!-- Modal Show Detail -->
       <div class="modal" v-bind:class="{'is-active' : modalDetail}">
         <div class="modal-background" @click="modalDetail = !modalDetail"></div>
@@ -242,18 +241,6 @@
                 </div>
               </div>
             </div>
-            <!-- <footer class="card-footer">
-              <div class="card-footer-item">
-                <dl>
-                  <dt>หากหลีกเลี่ยงไม่ได้จำเป็นต้องสวมหน้ากากป้องกันฝุ่น โดยมีวิธีการเลือก ดังนี้</dt>
-                    <ol>
-                      <li>หน้ากาก N95 ต้องเลือกที่มีขนาดเหมาะ แนบกระชับกับใบหน้า ครอบจมูกและใต้คางได้อย่างมิดชิด</li>
-                      <li>หน้ากากอนามัย ต้องผลิตจากวัสดุสังเคราะห์ อย่างน้อย 3 ชั้น โดยมีแผ่นกรองอยู่ชั้นกลาง</li>
-                      <li>หน้ากากผ้า ต้องตัดเย็บจากผ้าที่ซ้อนกันอย่างน้อย 2 ชั้น หรือมีความหนาไม่น้อยกว่า 0.5 มิลลิเมตร และมีขนาดเหมาะกับใบหน้า</li>
-                    </ol>
-                </dl>
-              </div>
-            </footer> -->
           </div>
           <div class="card" v-else-if="colorIdDetail == 4" style="font-family: 'Kanit', sans-serif;">
             <div class="card-content">
@@ -327,9 +314,6 @@
         </div>
         <button class="modal-close is-large" aria-label="close" @click="modalDetail = !modalDetail"></button>
       </div>
-
-    <!-- โครงสร้าง HTML ของ Modal -->
-
     <!-- Modal สำหรับกรอกอีเมล -->
     <div class="modal" :class="{ 'is-active': isModalActive }">
       <div class="modal-background" @click="closeModal"></div>
@@ -363,33 +347,31 @@
               type="time"
               class="form-control"
               id="scheduledTime"
-              v-model="scheduledTime"
-            />
+              v-model="scheduledTime"/>
           </div>
         </section>
         <footer class="modal-card-foot" >
-          <button class="button is-link is-outlined" @click="sendEmail" style="font-family: 'Kanit', sans-serif">
-            ส่งข้อมูล PM 2.5 ไปที่อีเมล
-          </button>
+          <button class="button is-link is-outlined" @click="sendEmailAndSchedule" style="font-family: 'Kanit', sans-serif">
+  ส่งข้อมูล PM 2.5 ไปที่อีเมล
+</button>
+
+
+
           <button class="button is-link is-light" @click="closeModal" style="font-family: 'Kanit', sans-serif">
             ยกเลิก
           </button>
         </footer>
       </div>
     </div>
-
     </div>
   </div>
 </template>
-
 <script>
 import axios from 'axios'
 import emailjs from "emailjs-com";
-
 export default {
   name: 'App',
   components: {
-    
   },
   data() {
     return {
@@ -402,22 +384,18 @@ export default {
       colorIdDetail: '',
       isModalActive: false,
       selectedData: null,
+      email: '',
+      scheduledTime: '',
     }
   },
   created() {
     this.fetchData()
-    //this.scheduleEmail();
+    this.scheduleEmail();
     setInterval(() => {
       this.fetchData()
     }, 60000)
   },
-  // computed: {
-  //   filterLocation: function(){
-  //     return this.info.filter((val) =>
-  //       val.nameTH.toLowerCase().includes(this.search.toLowerCase())
-  //     );
-  //   }
-  // },
+
   methods: {
     fetchData() {
       axios.get('http://air4thai.pcd.go.th/services/getNewAQI_JSON.php')
@@ -469,10 +447,13 @@ export default {
           to_email: this.email,
           pm25_value: this.selectedData.AQILast.PM25.value,
           location_name: this.selectedData.nameTH,
+          locationDetail_name: this.selectedData.areaTH,
+          date_value: this.selectedData.AQILast.date,
+          time_value: this.selectedData.AQILast.time,
         };
-        const serviceID = "service_0nazvow";
-        const templateID = "template_ig7ddrg";
-        const userID = "R1-S3aMadPkVaUqP3";
+        const serviceID = "service_v2ciu13";
+        const templateID = "template_tc2zpfc";
+        const userID = "-9ZakZFErDIRoXZEp";
         const result = await emailjs.send(
           serviceID,
           templateID,
@@ -486,9 +467,27 @@ export default {
         }
       } catch (error) {
         console.error("Failed to send email:", error);
-        alert("เกิดข้อผิดพลาดในการส่งอีเมล");
+
       }
-    }
+    },
+    scheduleEmail() {
+      const now = new Date();
+      const scheduledDate = new Date();
+      const [scheduledHour, scheduledMinute] = this.scheduledTime.split(':');
+      scheduledDate.setHours(scheduledHour, scheduledMinute, 0);
+
+      if (scheduledDate <= now) {
+        scheduledDate.setDate(scheduledDate.getDate() + 1); // Schedule for the next day if the time has passed today
+      }
+
+      const timeUntilScheduledTime = scheduledDate - now;
+      setTimeout(this.sendEmail, timeUntilScheduledTime);
+    },
+    sendEmailAndSchedule() {
+    this.scheduleEmail();
+    alert('อีเมลถูกกำหนดเวลาส่งเรียบร้อย')
+    this.closeModal();
+  },
 }}
 </script>
 <style>
