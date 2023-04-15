@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  frontend:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    image: kotchakorn63070001/my-app_image:1.0
+
