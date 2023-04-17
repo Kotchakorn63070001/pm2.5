@@ -24,11 +24,7 @@ pipeline {
             stage('Push Stage'){
                 steps {
                     dir('pm2.5') {
-                        // sh 'docker push kotchakorn63070001/my-backend_image:1.0'
-                        withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                            sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                        }
-                        sh 'docker push kotchakorn63070001/my-app_image:1.0'
+                        sh 'docker push kotchakorn63070001/app_image:1.0'
                     }
                 }
             }

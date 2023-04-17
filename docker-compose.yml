@@ -1,10 +1,8 @@
 version: '3'
 
 services:
-  web:
+  frontend:
     build:
-      context: ./app
       dockerfile: Dockerfile
-    image: kotchakorn63070001/my-app_image:1.0
-    command: /bin/sh -c "npm run serve"
+    image: kotchakorn63070001/app_image:1.0
 
