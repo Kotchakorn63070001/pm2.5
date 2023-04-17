@@ -6,4 +6,8 @@ services:
       context: ./app
       dockerfile: Dockerfile
     image: kotchakorn63070001/app_image:1.0
+    ports:
+      - '8082:8080'
+    volumes:
+      - .:/app
 
