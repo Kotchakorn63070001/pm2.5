@@ -368,11 +368,10 @@ export default {
       selectedData: null,
       email: '',
       scheduledTime: '',
-
       qualityStatus: "",
       advice: "",
       iconCode:"",
-      iconColor:""
+      iconColor:"",
     }
   },
   created() {
